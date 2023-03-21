@@ -1,7 +1,12 @@
 {
   "name": "toggleeditor",
   "displayName": "toggleEditor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zarghamkhandev/toggleEditor.git"
+  },
   "description": "Keymaps for better editor navigation",
+  "publisher": "zarghamkhandev",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.76.0"
