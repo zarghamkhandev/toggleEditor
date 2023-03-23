@@ -17,12 +17,40 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const previousTextEditor = vscode.commands.registerCommand(
+    "toggleeditor.previousTextEditor",
+    async () => {
+      const allTabs = getTabs();
+      // get index of terminal tab next to the active tab
+      const textTabs = allTabs.filter((tab) => isInputTab(tab.input));
+      const nextTab = getPreviousTab(textTabs);
+
+      // tab next to the activated tab
+      if (nextTab) {
+        await goToTabAtIndex(nextTab.index);
+      }
+    }
+  );
+
   const nextTerminalEditor = vscode.commands.registerCommand(
     "toggleeditor.nextTerminalEditor",
     async () => {
       const allTabs = getTabs();
       const terminalTabs = allTabs.filter((tab) => isTerminalTab(tab.input));
       const nextTab = getNextTab(terminalTabs);
+      // tab next to the actived tab
+      if (nextTab) {
+        await goToTabAtIndex(nextTab.index);
+      }
+    }
+  );
+
+  const previousTerminalEditor = vscode.commands.registerCommand(
+    "toggleeditor.previousTerminalEditor ",
+    async () => {
+      const allTabs = getTabs();
+      const terminalTabs = allTabs.filter((tab) => isTerminalTab(tab.input));
+      const nextTab = getPreviousTab(terminalTabs);
       // tab next to the actived tab
       if (nextTab) {
         await goToTabAtIndex(nextTab.index);
@@ -42,7 +70,13 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    ...[nextTextEditor, nextTerminalEditor, newPinnedTerminal]
+    ...[
+      nextTextEditor,
+      nextTerminalEditor,
+      newPinnedTerminal,
+      previousTextEditor,
+      previousTerminalEditor,
+    ]
   );
 }
 
@@ -71,6 +105,12 @@ interface TabWithIndex extends Tab {
 function getNextTab(tabs: TabWithIndex[]) {
   const activeTabIndex = tabs.findIndex((tab) => tab.isActive);
   const nextIndex = (activeTabIndex + 1) % tabs.length;
+  return tabs[nextIndex];
+}
+
+function getPreviousTab(tabs: TabWithIndex[]) {
+  const activeTabIndex = tabs.findIndex((tab) => tab.isActive);
+  const nextIndex = (activeTabIndex - 1) % tabs.length;
   return tabs[nextIndex];
 }
 
