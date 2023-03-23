@@ -23,7 +23,14 @@ function activate(context) {
             await goToTabAtIndex(nextTab.index);
         }
     });
-    context.subscriptions.push(...[nextTextEditor, nextTerminalEditor]);
+    const newPinnedTerminal = vscode.commands.registerCommand("toggleeditor.newPinnedTerminal", async () => {
+        // create a new terminal
+        const terminal = vscode.window.createTerminal();
+        // pin the terminal
+        terminal.show(true);
+        vscode.commands.executeCommand("workbench.action.pinEditor");
+    });
+    context.subscriptions.push(...[nextTextEditor, nextTerminalEditor, newPinnedTerminal]);
 }
 exports.activate = activate;
 // This method is called when your extension is deactivated

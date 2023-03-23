@@ -7,7 +7,7 @@
   },
   "description": "Keymaps for better editor navigation",
   "publisher": "zarghamkhandev",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.76.0"
   },
@@ -25,6 +25,10 @@
       {
         "command": "toggleeditor.nextTerminalEditor",
         "title": "Next Terminal Editor"
+      },
+      {
+        "command": "toggleeditor.newPinnedTerminal",
+        "title": "New Pinned Terminal"
       }
     ]
   },
