@@ -46,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   const previousTerminalEditor = vscode.commands.registerCommand(
-    "toggleeditor.previousTerminalEditor ",
+    "toggleeditor.previousTerminalEditor",
     async () => {
       const allTabs = getTabs();
       const terminalTabs = allTabs.filter((tab) => isTerminalTab(tab.input));
