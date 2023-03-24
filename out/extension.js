@@ -33,7 +33,7 @@ function activate(context) {
             await goToTabAtIndex(nextTab.index);
         }
     });
-    const previousTerminalEditor = vscode.commands.registerCommand("toggleeditor.previousTerminalEditor ", async () => {
+    const previousTerminalEditor = vscode.commands.registerCommand("toggleeditor.previousTerminalEditor", async () => {
         const allTabs = getTabs();
         const terminalTabs = allTabs.filter((tab) => isTerminalTab(tab.input));
         const nextTab = getPreviousTab(terminalTabs);
@@ -49,12 +49,17 @@ function activate(context) {
         terminal.show(true);
         vscode.commands.executeCommand("workbench.action.pinEditor");
     });
+    const unPinAndCloseEditor = vscode.commands.registerCommand("toggleeditor.unPinAndCloseEditor", async () => {
+        vscode.commands.executeCommand("workbench.action.unpinEditor");
+        vscode.commands.executeCommand("workbench.action.closeActiveEditor");
+    });
     context.subscriptions.push(...[
         nextTextEditor,
         nextTerminalEditor,
         newPinnedTerminal,
         previousTextEditor,
         previousTerminalEditor,
+        unPinAndCloseEditor,
     ]);
 }
 exports.activate = activate;
@@ -77,8 +82,8 @@ function getNextTab(tabs) {
 }
 function getPreviousTab(tabs) {
     const activeTabIndex = tabs.findIndex((tab) => tab.isActive);
-    const nextIndex = (activeTabIndex - 1) % tabs.length;
-    return tabs[nextIndex];
+    const previousIndex = activeTabIndex === 0 ? tabs.length - 1 : activeTabIndex - 1;
+    return tabs[previousIndex];
 }
 function getTabs() {
     return vscode.window.tabGroups.activeTabGroup.tabs.map((tab, index) => {

@@ -7,7 +7,7 @@
   },
   "description": "Keymaps for better editor navigation",
   "publisher": "zarghamkhandev",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "engines": {
     "vscode": "^1.76.0"
   },
@@ -37,6 +37,10 @@
       {
         "command": "toggleeditor.newPinnedTerminal",
         "title": "New Pinned Terminal"
+      },
+      {
+        "command": "toggleeditor.unPinAndCloseEditor",
+        "title": "Unpin and close editor"
       }
     ]
   },

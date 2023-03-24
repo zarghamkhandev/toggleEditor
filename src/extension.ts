@@ -69,6 +69,14 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const unPinAndCloseEditor = vscode.commands.registerCommand(
+    "toggleeditor.unPinAndCloseEditor",
+    async () => {
+      vscode.commands.executeCommand("workbench.action.unpinEditor");
+      vscode.commands.executeCommand("workbench.action.closeActiveEditor");
+    }
+  );
+
   context.subscriptions.push(
     ...[
       nextTextEditor,
@@ -76,6 +84,7 @@ export function activate(context: vscode.ExtensionContext) {
       newPinnedTerminal,
       previousTextEditor,
       previousTerminalEditor,
+      unPinAndCloseEditor,
     ]
   );
 }
@@ -110,8 +119,9 @@ function getNextTab(tabs: TabWithIndex[]) {
 
 function getPreviousTab(tabs: TabWithIndex[]) {
   const activeTabIndex = tabs.findIndex((tab) => tab.isActive);
-  const nextIndex = (activeTabIndex - 1) % tabs.length;
-  return tabs[nextIndex];
+  const previousIndex =
+    activeTabIndex === 0 ? tabs.length - 1 : activeTabIndex - 1;
+  return tabs[previousIndex];
 }
 
 function getTabs(): TabWithIndex[] {
